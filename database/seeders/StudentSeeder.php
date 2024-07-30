@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Student;
+use GuzzleHttp\Promise\Create;
 
 class StudentSeeder extends Seeder
 {
@@ -13,14 +14,40 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        Student::create([
-            'name' => 'John Doe',
-            'mobile' => '0123456789',
-        ]);
 
-        Student::create([
-            'name' => 'Jane Smith',
-            'mobile' => '0987654321',
-        ]);
+        $students =[
+                [
+                    'name' => 'Mohammad Yeasin Arfat Nayan',
+                    'mobile' => '01690091590',
+                ],
+                [
+                    'name' => 'Yeasin Ibrahim Ridoan',
+                    'mobile' => '0123456789',
+                ],
+                [
+                    'name' => 'Sharmila Alam Risha',
+                    'mobile' => '0987654321',
+                ],
+                [
+                    'name' => 'Mohammad Nayan',
+                    'mobile' => '0987654321',
+                ],
+                [
+                    'name' => 'Khan Mahammud',
+                    'mobile' => '0987654321',
+                ],
+                [
+                    'name' => 'Shadath Alam ',
+                    'mobile' => '0987654321',
+                ],
+            ];
+
+            // Insert data
+            foreach($students as $student){
+                Student::create([
+                    'name' => $student['name'],
+                    'mobile' => $student['mobile']
+                ]);
+            }
     }
 }

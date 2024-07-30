@@ -19,12 +19,16 @@
                                     <td class="py-2 px-4 border-b border-gray-700 text-white">{{ $student->mobile }}</td>
                                     <td class="py-2 px-4 border-b border-gray-700">
                                         <div class="flex space-x-2">
+                                        @can('edit students')
                                             <a href="{{ route('students.edit', $student) }}" class="border mr-1 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">Edit</a>
+                                            @endcan
+                                            @can('delete students')
                                             <form action="{{ route('students.destroy', $student) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>

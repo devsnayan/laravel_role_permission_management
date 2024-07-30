@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index students', ['only' => ['index']]);
+        $this->middleware('permission:add students', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit students', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete students', ['only' => ['destroy']]);
+        $this->middleware('permission:show students', ['only' => ['show']]);
+    }
     /**
      * Display a listing of the resource.
      */
