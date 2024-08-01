@@ -14,15 +14,57 @@ class PermissionsSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'show students',
-            'add students',
-            'edit students',
-            'delete students',
-            'index students'
+            [
+                'name' => 'show students',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'add students',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'edit students',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'delete students',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'index students',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'show students',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'add students',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'edit students',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'delete students',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'index students',
+                'guard_name' => 'web'
+            ],
+            
         ];
 
         foreach ($permissions as $permission) {
-            Permission::updateOrCreate(['name' => $permission], ['guard_name' => 'web']);
+            Permission::create(
+                [
+                   'name' => $permission['name'],
+                   'guard_name' => $permission['guard_name'],
+                ]
+            );
         }
+
     }
 }

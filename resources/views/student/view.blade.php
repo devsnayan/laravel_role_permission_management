@@ -1,42 +1,51 @@
-<x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-900 border-b border-gray-700">
-                    <table class="w-full bg-gray-800 border-collapse border border-gray-700">
-                            <thead>
-                                <tr>
-                                    <th class="py-2 px-4 border-b border-gray-700 text-white">ID</th>
-                                    <th class="py-2 px-4 border-b border-gray-700 text-white">Name</th>
-                                    <th class="py-2 px-4 border-b border-gray-700 text-white">Mobile</th>
-                                    <th class="py-2 px-4 border-b border-gray-700 text-white">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-gray-700 text-white">{{ $student->id }}</td>
-                                    <td class="py-2 px-4 border-b border-gray-700 text-white">{{ $student->name }}</td>
-                                    <td class="py-2 px-4 border-b border-gray-700 text-white">{{ $student->mobile }}</td>
-                                    <td class="py-2 px-4 border-b border-gray-700">
-                                        <div class="flex space-x-2">
-                                        @can('edit students')
-                                            <a href="{{ route('students.edit', $student) }}" class="border mr-1 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">Edit</a>
-                                            @endcan
-                                            @can('delete students')
-                                            <form action="{{ route('students.destroy', $student) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                            @endcan
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+@extends('layouts.app')
+@section('title','Student | Show')
+
+@section('content')
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                @can('add students')
+                <div class="py-2">
+                    <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm">
+                        Add Student
+                    </a>
                 </div>
+                @endcan
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-white">ID</th>
+                            <th class=" text-white">Name</th>
+                            <th class="  text-white">Mobile</th>
+                            <th class="  text-white">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="  text-white">{{ $student->id }}</td>
+                            <td class="  text-white">{{ $student->name }}</td>
+                            <td class="  text-white">{{ $student->mobile }}</td>
+                            <td class=" ">
+                                <div class="">
+                                    @can('edit students')
+                                    <a href="{{ route('students.edit', $student) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    @endcan
+                                    @can('delete students')
+                                    <form action="{{ route('students.destroy', $student) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

@@ -54,7 +54,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $student = $student->first();
+        $student = $student->find($student->id);
         return view('student.view', compact('student'));
     }
 

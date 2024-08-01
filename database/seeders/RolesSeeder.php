@@ -13,9 +13,41 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Role::updateOrCreate(['name' => 'admin'], ['guard_name' => 'web']);
-        $editor = Role::updateOrCreate(['name' => 'editor'], ['guard_name' => 'web']);
-        $viewer = Role::updateOrCreate(['name' => 'viewer'], ['guard_name' => 'web']);
+        $roles = 
+        [
+            [
+                'name' => 'super_admin',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'super_editor',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'super_viewer',
+                'guard_name' => 'admin'
+            ],
+            [
+                'name' => 'user',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'user_editor',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'user_viewer',
+                'guard_name' => 'web'
+            ],
+        ];
+
+        foreach ($roles as $role) {
+            Role::create([
+                'name'=> $role['name'],
+                'guard_name' => $role['guard_name'],
+            ]);
+        }
     
     }
 }
+

@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -35,11 +35,18 @@ Route::middleware('auth')->group(function () {
     // Route::get('/students/edit', [StudentController::class, 'edit'])->name('students.edit');
     // Route::put('/students/update', [StudentController::class, 'create'])->name('students.create');
     // Route::delete('/students/delete', [StudentController::class, 'destroy'])->name('students.destroy');
-    // Route::middleware(['role:admin'])->group(function () {
+    // Route::middleware(['auth'])->group(function () {
     //     Route::resource('students', StudentController::class);
     // });
-    Route::resource('students', StudentController::class);
+
+    
+    
 });
+
+Route::resource('students', StudentController::class)->middleware('auth:admin');
+
+
 
 
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
