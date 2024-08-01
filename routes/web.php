@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Development\ArtisanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,33 +19,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Student Module
-    // Route::get('/students/index', [StudentController::class, 'index'])->name('students.index');
-    // Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
-    // Route::post('/students/store', [StudentController::class, 'store'])->name('students.store');
-    // Route::get('/students/edit', [StudentController::class, 'edit'])->name('students.edit');
-    // Route::put('/students/update', [StudentController::class, 'create'])->name('students.create');
-    // Route::delete('/students/delete', [StudentController::class, 'destroy'])->name('students.destroy');
-    // Route::middleware(['auth'])->group(function () {
-    //     Route::resource('students', StudentController::class);
-    // });
-
-    
-    
-});
 
 Route::resource('students', StudentController::class)->middleware('auth:admin');
 
-
+// Development
+Route::controller(ArtisanController::class)->group(function () {
+    if(env('DB_DEBUG'))
+    {
+        Route::get('/run-query','runQuery')->name('run.query');
+        Route::get('/artisan/migrate','artisanMigrate')->name('artisan.migrate');
+        Route::get('/artisan/migrate-seed','artisanMigrateSeed')->name('artisan.migrate.seed');
+    }
+    
+    Route::get('/artisan/storage-link','artisanStorageLink')->name('artisan.storage.link');
+    Route::get('/artisan/optimize-clear','artisanOptimizeClear')->name('artisan.optimize.clear');
+    Route::get('/artisan/cache-clear','artisanCacheClear')->name('artisan.cache.clear');
+    Route::get('/artisan/dibi-install','dibiInstalll')->name('artisan.dibi.install');
+});
 
 
 require __DIR__.'/auth.php';
