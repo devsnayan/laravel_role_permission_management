@@ -5,6 +5,9 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    // custom add for artisan controller
+    'db_debug' => env('DB_DEBUG', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
