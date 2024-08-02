@@ -22,6 +22,14 @@ Route::get('/', function () {
 
 Route::resource('students', StudentController::class)->middleware('auth:admin');
 
+// Route::middleware('auth:web')->group(function () {
+//     Route::resource('/students', StudentController::class);
+// });
+
+// Route::middleware('auth:admin')->group(function () {
+//     Route::resource('admin/students', StudentController::class);
+// });
+
 // Development
 Route::controller(ArtisanController::class)->group(function () {
     if(env('DB_DEBUG'))

@@ -15,37 +15,19 @@ class RolesSeeder extends Seeder
     {
         $roles = 
         [
-            [
-                'name' => 'super_admin',
-                'guard_name' => 'admin'
-            ],
-            [
-                'name' => 'super_editor',
-                'guard_name' => 'admin'
-            ],
-            [
-                'name' => 'super_viewer',
-                'guard_name' => 'admin'
-            ],
-            [
-                'name' => 'user',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'user_editor',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'user_viewer',
-                'guard_name' => 'web'
-            ],
+            // Admins
+            ['name' => 'super_admin', 'guard_name' => 'admin'],
+            ['name' => 'super_editor', 'guard_name' => 'admin'],
+            ['name' => 'super_viewer', 'guard_name' => 'admin'],
+
+            // Users
+            ['name' => 'user', 'guard_name' => 'web'],
+            ['name' => 'user_editor', 'guard_name' => 'web'],
+            ['name' => 'user_viewer', 'guard_name' => 'web'],
         ];
 
         foreach ($roles as $role) {
-            Role::create([
-                'name'=> $role['name'],
-                'guard_name' => $role['guard_name'],
-            ]);
+            Role::firstOrCreate($role);
         }
     
     }

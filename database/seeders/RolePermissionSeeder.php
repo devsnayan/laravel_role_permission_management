@@ -20,28 +20,15 @@ class RolePermissionSeeder extends Seeder
 
         // Super_Admin
        $super_admin = Role::where('name','super_admin')->first();
-       $super_admin->givePermissionTo([
-            'show students',
-            'add students',
-            'edit students',
-            'delete students',
-            'index students'
-        ]);
+       $super_admin->givePermissionTo(['show students', 'add students', 'edit students', 'delete students', 'index students']);
 
         // Super_Editor
        $super_editor = Role::where('name','super_editor')->first();
-       $super_editor->givePermissionTo([
-            'index students', 
-            'edit students', 
-            'show students'
-        ]);
+       $super_editor->givePermissionTo(['index students', 'edit students', 'show students']);
 
         // Super_Viewer
        $super_viewer = Role::where('name','super_viewer')->first();
-       $super_viewer->givePermissionTo([
-            'index students',
-            'show students'
-        ]);
+       $super_viewer->givePermissionTo(['index students', 'show students']);
 
        // Assign roles to users
        $admin = Admin::find(1); // Assuming you have a admin with ID 1
@@ -59,26 +46,15 @@ class RolePermissionSeeder extends Seeder
 
         // Admin User
         $user = Role::where('name','user')->first();
-        $user->givePermissionTo([
-            'show students',
-            'edit students',
-            'delete students',
-            'index students'
-        ]);
+        $user->givePermissionTo(['show students', 'add students', 'edit students', 'delete students', 'index students']);
 
         // User_Editor
         $user_editor = Role::where('name','user_editor')->first();
-        $user_editor->givePermissionTo([
-            'index students', 
-            'edit students'
-        ]);
+        $user_editor->givePermissionTo(['index students', 'edit students']);
 
         // User_Viewer
         $user_viewer = Role::where('name','user_viewer')->first();
-        $user_viewer->givePermissionTo([
-            'index students',
-            'show students'
-        ]);
+        $user_viewer->givePermissionTo(['index students', 'show students']);
 
         // Assign roles to users
         $user = User::find(1); // Assuming you have a user with ID 1
