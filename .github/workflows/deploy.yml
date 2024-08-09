@@ -1,0 +1,55 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, bcmath, json, fileinfo
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add cPanel server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 7822 devs.nayan.pro >> ~/.ssh/known_hosts
+
+      - name: Copy files to cPanel via SCP
+        run: |
+          export LANG=bn_BD.UTF-8
+          export LC_ALL=bn_BD.UTF-8
+          scp -P 7822 -r -o StrictHostKeyChecking=no ./* nayan@devs.nayan.pro:/home/nayan/devs.nayan.pro
+
+      - name: Install dependencies and run Laravel commands
+        run: |
+          ssh -p 7822 -o StrictHostKeyChecking=no nayan@devs.nayan.pro '
+            export LANG=bn_BD.UTF-8
+            export LC_ALL=bn_BD.UTF-8
+            cd /home/nayan/devs.nayan.pro
+            if [ -x "$(command -v composer)" ]; then
+              echo "Composer is installed. Proceeding with installation and migration."
+              composer install
+              php artisan migrate --force
+              php artisan config:cache
+              php artisan route:cache
+              php artisan view:cache
+            else
+              echo "Composer is not installed or not in PATH. Please install Composer to continue."
+              exit 1
+            fi
+          '
